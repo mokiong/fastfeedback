@@ -1,7 +1,7 @@
 import firebase from './firebase';
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export function ProvideAuth({ children }) {
    const auth = useProvideAuth();
@@ -12,7 +12,7 @@ export const useAuth = () => {
    return useContext(AuthContext);
 };
 
-function useProvideAuth(): authCont {
+function useProvideAuth() {
    const [user, setUser] = useState(null);
    console.log(user);
    const signinWithGithub = () => {

@@ -22,10 +22,14 @@ const index: React.FC<indexProps> = ({}) => {
                Get started by editing{' '}
                <code className={styles.code}>pages/index.js</code>
             </p>
-            <button onClick={(e) => auth.signinWithGithub()}>Sign In</button>
-            <div>{auth?.user?.email}</div>
-            {auth?.user && (
-               <button onClick={(e) => auth.signout()}>Sign Out</button>
+            <button onClick={(e) => (auth as any).signinWithGithub()}>
+               Sign In
+            </button>
+            <div>{(auth as any)?.user?.email}</div>
+            {(auth as any)?.user && (
+               <button onClick={(e) => (auth as any).signout()}>
+                  Sign Out
+               </button>
             )}
          </main>
 
