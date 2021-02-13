@@ -4,7 +4,7 @@ import React from 'react';
 import { ProvideAuth } from '../lib/auth';
 import theme from '../styles/theme';
 
-const GlobalStyle = ({ children }) => {
+const GlobalStyle = () => {
    return (
       <>
          <Global
@@ -21,7 +21,6 @@ const GlobalStyle = ({ children }) => {
                }
             `}
          />
-         {children}
       </>
    );
 };
@@ -30,7 +29,6 @@ function MyApp({ Component, pageProps }) {
    return (
       <ThemeProvider theme={theme}>
          <ProvideAuth>
-            <GlobalStyle />
             <Component {...pageProps} />
          </ProvideAuth>
       </ThemeProvider>
