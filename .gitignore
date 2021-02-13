@@ -2,7 +2,10 @@
 .prettierrc
 videoDuration.txt
 test.js
+<<<<<<< HEAD
 
+=======
+>>>>>>> a3555e56bcab2a61de355e5930160ac141b38ed2
 # dependencies
 /node_modules
 /.pnp
