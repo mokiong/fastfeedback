@@ -24,7 +24,6 @@ const theme = extendTheme({
    //       },
    //    },
    // },
-
    // icons: {
    //    ...chakraTheme.icons,
    //    logo: {
