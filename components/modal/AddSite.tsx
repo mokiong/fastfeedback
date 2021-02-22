@@ -1,4 +1,5 @@
 import React from 'react';
+import { mutate } from 'swr';
 import {
    Modal,
    ModalOverlay,
@@ -12,31 +13,63 @@ import {
    FormLabel,
    Input,
    useDisclosure,
+   useToast,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { createSite } from '@/lib/firestore';
+import { useAuth } from '@/lib/auth';
+import fetcher from '@/utils/fetcher';
 
 interface AddSiteProps {}
 
-export const AddSite: React.FC<AddSiteProps> = ({}) => {
+export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
    const { isOpen, onOpen, onClose } = useDisclosure();
+   const toast = useToast();
+   const auth = useAuth();
    const initialRef = React.useRef();
    const { register, handleSubmit } = useForm();
-   const onCreateSite = (data) => createSite(data);
+
+   const onCreateSite = ({ name, url }) => {
+      const newSite = {
+         authorId: auth.user.uid,
+         createdAt: new Date().toISOString(),
+         name,
+         url,
+      };
+
+      createSite(newSite);
+      toast({
+         title: 'Success!',
+         description: "We've added your site.",
+         status: 'success',
+         duration: 5000,
+         isClosable: true,
+      });
+      mutate(
+         ['/api/sites', auth.user.token],
+         (data) => {
+            return { sites: [...data.sites, newSite] };
+         },
+         false
+      );
+      onClose();
+   };
 
    return (
       <>
          <Button
             onClick={onOpen}
+            backgroundColor="gray.900"
+            color="white"
             fontWeight="medium"
-            maxW="200px"
-            variant="outline"
-            size="md"
-            color="black"
+            _hover={{ bg: 'gray.700' }}
+            _active={{
+               bg: 'gray.800',
+               transform: 'scale(0.95)',
+            }}
          >
-            Add Your First Site
+            {children}
          </Button>
-
          <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
@@ -47,7 +80,7 @@ export const AddSite: React.FC<AddSiteProps> = ({}) => {
                      <FormLabel>Name</FormLabel>
                      <Input
                         placeholder="My Site"
-                        name="site"
+                        name="name"
                         ref={register({ required: true })}
                      />
                   </FormControl>

@@ -8,7 +8,7 @@ interface indexProps {}
 
 const index: React.FC<indexProps> = ({}) => {
    const auth = useAuth();
-   console.log('auth', auth);
+   console.log('auth', auth.user);
    return (
       <Flex
          as="main"
@@ -18,6 +18,15 @@ const index: React.FC<indexProps> = ({}) => {
          h="100vh"
       >
          <Head>
+            <script
+               dangerouslySetInnerHTML={{
+                  __html: `
+          if (document.cookie && document.cookie.includes('fast-feedback-auth')) {
+            window.location.href = "/dashboard"
+          }
+        `,
+               }}
+            />
             <title>Fast Feedback</title>
          </Head>
 
@@ -37,6 +46,7 @@ const index: React.FC<indexProps> = ({}) => {
                Sign In
             </Button>
          )}
+         {/* {(auth as any)?.user && <Flex>{auth.user}</Flex>} */}
       </Flex>
    );
 };
