@@ -12,7 +12,7 @@ export async function getAllFeedBack(siteId) {
 
       if (snapshot.empty) {
          console.log('No matching documents.');
-         return false;
+         return;
       }
 
       snapshot.forEach((doc) => {
