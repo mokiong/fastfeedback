@@ -16,7 +16,6 @@ import AddSite from '../modal/AddSite';
 
 const DashboardShell: React.FC<{}> = ({ children }) => {
    const auth = useAuth();
-   console.log('auth at shell:', auth);
 
    return (
       <Flex flexDirection="column">

@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import { getAllFeedBack } from '@/lib/db-admin';
+import { getAllFeedBack, getAllSites } from '@/lib/db-admin';
 import Feedback from '@/components/Feedback';
 import { useAuth } from '@/lib/auth';
 import { createFeedback } from '@/lib/firestore';
@@ -55,13 +55,13 @@ const SiteFeedback = ({ initialFeedback }) => {
 
 export async function getStaticProps(context) {
    const { siteId } = context.params;
-   const { feedback } = await getAllFeedBack(siteId);
+   const data = await getAllFeedBack(siteId);
 
    return {
       props: {
-         initialFeedback: feedback,
+         initialFeedback: data ? data.feedback : [],
       },
-      unstable_revalidate: 1,
+      revalidate: 1,
    };
 }
 

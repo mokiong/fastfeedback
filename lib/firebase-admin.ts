@@ -15,7 +15,7 @@ if (!admin.apps.length) {
                : JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
       }),
-      databaseURL: 'https://fast-feedback-demo.firebaseio.com',
+      databaseURL: 'https://fast-feedback-demo-38095.firebaseio.com',
    });
 }
 
