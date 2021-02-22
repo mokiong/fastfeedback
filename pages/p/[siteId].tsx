@@ -66,18 +66,6 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-   // const { sites } = await import('@/utils/siteIdUtil');
-   // const paths = sites.siteIds.map((id) => ({
-   //    params: {
-   //       siteId: id,
-   //    },
-   // }));
-
-   // // const { getAllSites } = await import('@/lib/db-admin');
-   // // // const feedback = await getAllFeedBack('26XYyadLo7H2MTgxbyMg');
-   // console.log(sitesa);
-   // console.log('sites:', sites);
-
    const { sites } = await getAllSites();
    const paths = sites.map((site) => ({
       params: {
@@ -89,28 +77,6 @@ export async function getStaticPaths() {
       paths,
       fallback: false,
    };
-
-   // return {
-   //    paths,
-   //    fallback: false,
-   // };
 }
-
-// export async function getStaticPaths() {
-//    const { getAllSites } = await import('@/lib/db-admin');
-
-//    const sites = await getAllSites();
-
-//    const paths = sites.map((site) => ({
-//       params: {
-//          siteId: site.id.toString(),
-//       },
-//    }));
-
-//    return {
-//       paths,
-//       fallback: false,
-//    };
-// }
 
 export default SiteFeedback;
