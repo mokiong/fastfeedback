@@ -2,11 +2,11 @@ import { getAllFeedBack } from '@/lib/db-admin';
 
 export default async (req, res) => {
    const { siteId } = req.query;
-   const { feedback, error } = await getAllFeedBack(siteId);
+   const respo = await getAllFeedBack(siteId);
 
-   if (error) {
-      res.status(500).json({ error });
+   if (respo.error) {
+      res.status(500).json({ error: respo.error });
    }
 
-   res.status(200).json({ feedback });
+   res.status(200).json({ feedback: respo.feedback });
 };

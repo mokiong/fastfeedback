@@ -55,11 +55,11 @@ const SiteFeedback = ({ initialFeedback }) => {
 
 export async function getStaticProps(context) {
    const { siteId } = context.params;
-   const { feedback } = await getAllFeedBack(siteId);
+   const data = await getAllFeedBack(siteId);
 
    return {
       props: {
-         initialFeedback: feedback ? feedback : [],
+         initialFeedback: data ? data.feedback : [],
       },
       revalidate: 1,
    };
