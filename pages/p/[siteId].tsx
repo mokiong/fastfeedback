@@ -75,7 +75,8 @@ export async function getStaticPaths() {
 
    // const { getAllSites } = await import('@/lib/db-admin');
    // // const feedback = await getAllFeedBack('26XYyadLo7H2MTgxbyMg');
-   // const { sites } = await getAllSites();
+   const { sites: sitesa } = await getAllSites();
+   console.log(sitesa);
    // console.log('sites:', sites);
    // const paths = sites.map((site) => ({
    //    params: {
