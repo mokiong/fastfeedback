@@ -1,8 +1,11 @@
 import Head from 'next/head';
 import React from 'react';
-import { Button, Code, Heading, Text, Flex } from '@chakra-ui/react';
+import { Button, Flex, Stack } from '@chakra-ui/react';
+
 import { useAuth } from '@/lib/auth';
 import LogoIcon from '@/components/icons/logo';
+import GithubIcon from '@/components/icons/GithubIcon';
+import GoogleIcon from '@/components/icons/GoogleIcon';
 
 interface indexProps {}
 
@@ -30,23 +33,56 @@ const index: React.FC<indexProps> = ({}) => {
             <title>Fast Feedback</title>
          </Head>
 
-         <LogoIcon color="black" name="logo" boxSize="32px"></LogoIcon>
+         <LogoIcon color="black" name="logo" boxSize="64px"></LogoIcon>
          {(auth as any)?.user ? (
-            <>
-               <Button onClick={(e) => (auth as any).signout()}>
-                  Sign Out
-               </Button>
-            </>
-         ) : (
             <Button
                mt={4}
-               size="sm"
-               onClick={(e) => (auth as any).signinWithGithub()}
+               as="a"
+               href="/dashboard"
+               backgroundColor="gray.900"
+               color="white"
+               fontWeight="medium"
+               _hover={{ bg: 'gray.700' }}
+               _active={{
+                  bg: 'gray.800',
+                  transform: 'scale(0.95)',
+               }}
             >
-               Sign In
+               View Dashboard
             </Button>
+         ) : (
+            <Stack spacing={4} mt={4}>
+               <Button
+                  leftIcon={<GithubIcon boxSize="20px" />}
+                  onClick={() => (auth as any).signinWithGithub()}
+                  backgroundColor="gray.900"
+                  color="white"
+                  fontWeight="medium"
+                  _hover={{ bg: 'gray.700' }}
+                  _active={{
+                     bg: 'gray.800',
+                     transform: 'scale(0.95)',
+                  }}
+               >
+                  Sign In with Github
+               </Button>
+               <Button
+                  leftIcon={<GoogleIcon boxSize="20px" />}
+                  onClick={() => (auth as any).signinWithGoogle()}
+                  backgroundColor="white"
+                  color="gray.900"
+                  variant="outline"
+                  fontWeight="medium"
+                  _hover={{ bg: 'gray.100' }}
+                  _active={{
+                     bg: 'gray.100',
+                     transform: 'scale(0.95)',
+                  }}
+               >
+                  Sign In with Google
+               </Button>
+            </Stack>
          )}
-         {/* {(auth as any)?.user && <Flex>{auth.user}</Flex>} */}
       </Flex>
    );
 };

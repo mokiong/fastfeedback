@@ -22,3 +22,7 @@ export const createSite = (data) => {
 export const createFeedback = (data) => {
    return firestore.collection('feedback').add(data);
 };
+
+export const deleteFeedback = (id) => {
+   return firestore.collection('feedback').doc(id).delete();
+};

@@ -6,19 +6,22 @@ import DashboardShell from '@/components/dashboard/shell';
 import useSWR from 'swr';
 import React from 'react';
 import fetcher from '@/utils/fetcher';
-import SiteTable from '@/components/SiteTable';
-import SiteTableHeader from '@/components/SiteTableHeader';
+import FeedbackTable from '@/components/FeedbackTable';
+import FeedbackTableHeader from '@/components/FeedbackTableHeader';
 
-interface dashboardProps {}
+interface feedbackProps {}
 
-const Dashboard: React.FC<dashboardProps> = ({}) => {
+const MyFeedback: React.FC<feedbackProps> = ({}) => {
    const { user } = useAuth();
-   const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
+   const { data } = useSWR(
+      user ? ['/api/feedback', user.token] : null,
+      fetcher
+   );
 
    if (!data) {
       return (
          <DashboardShell>
-            <SiteTableHeader />
+            <FeedbackTableHeader />
             <SiteTableSkeleton />
          </DashboardShell>
       );
@@ -26,10 +29,14 @@ const Dashboard: React.FC<dashboardProps> = ({}) => {
 
    return (
       <DashboardShell>
-         <SiteTableHeader />
-         {data.sites ? <SiteTable sites={data.sites} /> : <EmptyState />}
+         <FeedbackTableHeader />
+         {data.feedback ? (
+            <FeedbackTable allFeedback={data.feedback} />
+         ) : (
+            <EmptyState />
+         )}
       </DashboardShell>
    );
 };
 
-export default Dashboard;
+export default MyFeedback;

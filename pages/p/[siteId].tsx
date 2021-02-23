@@ -16,7 +16,7 @@ const SiteFeedback = ({ initialFeedback }) => {
    const onSubmit = (e) => {
       e.preventDefault();
       const newFeedBack = {
-         author: auth.user.email,
+         author: auth.user.name,
          authorId: auth.user.uid,
          siteId: router.query.siteId,
          text: inputEl.current.value,

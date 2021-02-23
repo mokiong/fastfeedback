@@ -69,3 +69,23 @@ export async function getUserSites(userId) {
 
    return { sites };
 }
+
+export async function getUserFeedback(userId) {
+   const snapshot = await db
+      .collection('feedback')
+      .where('authorId', '==', userId)
+      .get();
+
+   const feedback = [];
+
+   if (snapshot.empty) {
+      console.log('No matching documents.');
+      return;
+   }
+
+   snapshot.forEach((doc) => {
+      feedback.push({ id: doc.id, ...doc.data() });
+   });
+
+   return { feedback };
+}

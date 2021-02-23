@@ -1,63 +1,62 @@
 import { useAuth } from '@/lib/auth';
-import {
-   Avatar,
-   Breadcrumb,
-   BreadcrumbItem,
-   BreadcrumbLink,
-   Flex,
-   Heading,
-   Link,
-   Button,
-   Stack,
-} from '@chakra-ui/react';
+import { Avatar, Box, Flex, Link, Button } from '@chakra-ui/react';
+import NextLink from 'next/link';
 import React from 'react';
 import LogoIcon from '../icons/logo';
-import AddSite from '../modal/AddSite';
 
 const DashboardShell: React.FC<{}> = ({ children }) => {
-   const auth = useAuth();
+   const { user, signout } = useAuth();
 
    return (
-      <Flex flexDirection="column">
+      <Box backgroundColor="gray.100" h="100vh">
          <Flex
-            flexDirection="row"
-            justifyContent="space-between"
             backgroundColor="white"
-            alignItems="center"
-            py={4}
-            px={8}
+            mb={[8, 16]}
+            w="full"
+            borderTop="5px solid #0AF5F4"
          >
-            <Stack spacing={4} isInline align="center">
-               <LogoIcon boxSize="24px" />
-               <Link>Feedback</Link>
-               <Link>Sites</Link>
-            </Stack>
-            <Flex alignItems="center" justifyContent="center">
-               {auth?.user && (
-                  <Button
-                     variant="ghost"
-                     onClick={() => auth?.signout()}
-                     mr={4}
-                  >
-                     Log Out
-                  </Button>
-               )}
-               <Avatar size="sm" src={auth?.user?.photoUrl} />
+            <Flex
+               alignItems="center"
+               justifyContent="space-between"
+               pt={4}
+               pb={4}
+               maxW="1250px"
+               margin="0 auto"
+               w="full"
+               px={8}
+               h="60px"
+            >
+               <Flex align="center">
+                  <NextLink href="/" passHref>
+                     <Link mr={4}>
+                        <LogoIcon boxSize="24px" />
+                     </Link>
+                  </NextLink>
+                  <NextLink href="/dashboard" passHref>
+                     <Link mr={4}>Sites</Link>
+                  </NextLink>
+                  <NextLink href="/feedback" passHref>
+                     <Link>Feedback</Link>
+                  </NextLink>
+               </Flex>
+               <Flex justifyContent="center" alignItems="center">
+                  {/* <NextLink href="/account" passHref> */}
+                  {user && (
+                     <Button variant="ghost" onClick={() => signout()} mr={4}>
+                        Log Out
+                     </Button>
+                  )}
+                  {/* <Link> */}
+                  <Avatar size="sm" src={user?.photoUrl} />
+                  {/* </Link> */}
+                  {/* </NextLink> */}
+               </Flex>
             </Flex>
          </Flex>
-         <Flex margin="0 auto" direction="column" p={8} maxWidth="1250px">
-            <Breadcrumb>
-               <BreadcrumbItem>
-                  <BreadcrumbLink>Sites</BreadcrumbLink>
-               </BreadcrumbItem>
-            </Breadcrumb>
-            <Flex justifyContent="space-between">
-               <Heading mb={8}>My Sites</Heading>
-               <AddSite> + Add Site </AddSite>
-            </Flex>
+         <Flex margin="0 auto" direction="column" maxW="1250px" px={[0, 8, 8]}>
             {children}
          </Flex>
-      </Flex>
+      </Box>
    );
 };
 
