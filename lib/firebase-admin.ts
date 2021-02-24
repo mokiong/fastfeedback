@@ -1,7 +1,6 @@
 import admin from 'firebase-admin';
 
 if (!admin.apps.length) {
-   console.log('init firebbase admin');
    admin.initializeApp({
       credential: admin.credential.cert({
          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
