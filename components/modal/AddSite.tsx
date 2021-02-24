@@ -37,7 +37,7 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
          url,
       };
 
-      createSite(newSite);
+      const { id } = createSite(newSite);
       toast({
          title: 'Success!',
          description: "We've added your site.",
@@ -47,9 +47,7 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
       });
       mutate(
          ['/api/sites', auth.user.token],
-         (data) => {
-            return { sites: [...data.sites, newSite] };
-         },
+         (data) => ({ sites: [...data.sites, { id, ...newSite }] }),
          false
       );
       onClose();

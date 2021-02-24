@@ -3,6 +3,7 @@ import cookie from 'js-cookie';
 
 import firebase from './firebase';
 import { createUser } from './firestore';
+import Router from 'next/router';
 
 const AuthContext = createContext(null);
 
@@ -43,6 +44,7 @@ function useProvideAuth() {
 
          return formattedUser;
       } else {
+         Router.push('/');
          setUser(false);
          cookie.remove('fast-feedback-auth');
          return false;
@@ -50,6 +52,8 @@ function useProvideAuth() {
    };
 
    const signinWithGithub = () => {
+      Router.push('/dashboard');
+
       return firebase
          .auth()
          .signInWithPopup(new firebase.auth.GithubAuthProvider())
@@ -59,6 +63,8 @@ function useProvideAuth() {
    };
 
    const signinWithGoogle = () => {
+      Router.push('/dashboard');
+
       return firebase
          .auth()
          .signInWithPopup(new firebase.auth.GoogleAuthProvider())
