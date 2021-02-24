@@ -52,13 +52,12 @@ function useProvideAuth() {
    };
 
    const signinWithGithub = () => {
-      Router.push('/dashboard');
-
       return firebase
          .auth()
          .signInWithPopup(new firebase.auth.GithubAuthProvider())
          .then((response) => {
             handleUser(response);
+            Router.push('/dashboard');
          });
    };
 
