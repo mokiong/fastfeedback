@@ -1,11 +1,12 @@
 import { useAuth } from '@/lib/auth';
 import { Avatar, Box, Flex, Link, Button } from '@chakra-ui/react';
+import { NextSeo } from 'next-seo';
 import NextLink from 'next/link';
 import React from 'react';
 import LogoIcon from '../icons/logo';
 
-const DashboardShell: React.FC<{}> = ({ children }) => {
-   const { user, signout } = useAuth();
+const DashboardShell = ({ children }) => {
+   const { user } = useAuth();
 
    return (
       <Box backgroundColor="gray.100" h="100vh">
@@ -42,8 +43,8 @@ const DashboardShell: React.FC<{}> = ({ children }) => {
                <Flex justifyContent="center" alignItems="center">
                   {/* <NextLink href="/account" passHref> */}
                   {user && (
-                     <Button variant="ghost" onClick={() => signout()} mr={4}>
-                        Log Out
+                     <Button as="a" variant="ghost" href="/account" mr={4}>
+                        Account
                      </Button>
                   )}
                   {/* <Link> */}

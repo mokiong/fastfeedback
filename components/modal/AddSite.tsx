@@ -18,7 +18,6 @@ import {
 import { useForm } from 'react-hook-form';
 import { createSite } from '@/lib/firestore';
 import { useAuth } from '@/lib/auth';
-import fetcher from '@/utils/fetcher';
 
 interface AddSiteProps {}
 
@@ -47,7 +46,7 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
       });
       mutate(
          ['/api/sites', auth.user.token],
-         (data) => ({ sites: [...data.sites, { id, ...newSite }] }),
+         (data) => ({ sites: [{ id, ...newSite }, ...data.sites] }),
          false
       );
       onClose();

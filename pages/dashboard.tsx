@@ -8,6 +8,7 @@ import React from 'react';
 import fetcher from '@/utils/fetcher';
 import SiteTable from '@/components/SiteTable';
 import SiteTableHeader from '@/components/SiteTableHeader';
+import Page from '@/components/Page';
 
 interface dashboardProps {}
 
@@ -32,4 +33,10 @@ const Dashboard: React.FC<dashboardProps> = ({}) => {
    );
 };
 
-export default Dashboard;
+const DashboardPage = () => (
+   <Page name="Dashboard" path="/dashboard">
+      <Dashboard />
+   </Page>
+);
+
+export default DashboardPage;
