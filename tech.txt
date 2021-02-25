@@ -1,3 +1,5 @@
 checkly     ---testing
 logflare    ---logging
 pino        ---logging
+stripe      ---payment
+fathom      ---analytics

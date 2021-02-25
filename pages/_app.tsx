@@ -1,10 +1,12 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { Global, css } from '@emotion/react';
+import { DefaultSeo } from 'next-seo';
+import SEO from 'next-seo.config';
 import React from 'react';
 import { ProvideAuth } from '../lib/auth';
 import theme from '../styles/theme';
 
-const GlobalStyle = () => {
+const GlobalStyle = ({ children }) => {
    return (
       <>
          <Global
@@ -22,6 +24,7 @@ const GlobalStyle = () => {
                }
             `}
          />
+         {children}
       </>
    );
 };
@@ -30,8 +33,10 @@ function MyApp({ Component, pageProps }) {
    return (
       <ChakraProvider theme={theme}>
          <ProvideAuth>
-            <GlobalStyle />
-            <Component {...pageProps} />
+            <GlobalStyle>
+               <DefaultSeo {...SEO} />
+               <Component {...pageProps} />
+            </GlobalStyle>
          </ProvideAuth>
       </ChakraProvider>
    );

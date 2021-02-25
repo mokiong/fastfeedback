@@ -37,14 +37,14 @@ function useProvideAuth() {
 
          createUser(formattedUser.uid, userWithoutToken);
          setUser(formattedUser);
-
+         const decodedToken = firebase.auth().currentUser;
+         
          cookie.set('fast-feedback-auth', true, {
             expires: 1,
          });
 
          return formattedUser;
       } else {
-         Router.push('/');
          setUser(false);
          cookie.remove('fast-feedback-auth');
          return false;
@@ -73,6 +73,8 @@ function useProvideAuth() {
    };
 
    const signout = () => {
+      Router.push('/');
+
       return firebase
          .auth()
          .signOut()
