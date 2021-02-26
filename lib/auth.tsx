@@ -38,7 +38,7 @@ function useProvideAuth() {
          createUser(formattedUser.uid, userWithoutToken);
          setUser(formattedUser);
          const decodedToken = firebase.auth().currentUser;
-         
+
          cookie.set('fast-feedback-auth', true, {
             expires: 1,
          });
@@ -57,12 +57,12 @@ function useProvideAuth() {
          .signInWithPopup(new firebase.auth.GithubAuthProvider())
          .then((response) => {
             handleUser(response);
-            Router.push('/dashboard');
+            Router.push('/sites');
          });
    };
 
    const signinWithGoogle = () => {
-      Router.push('/dashboard');
+      Router.push('/sites');
 
       return firebase
          .auth()

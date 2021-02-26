@@ -26,6 +26,13 @@ export const createFeedback = (data) => {
    return firestore.collection('feedback').add(data);
 };
 
+export const updateFeedback = (id, newValues) => {
+   return firestore.collection('feedback').doc(id).update(newValues);
+};
+
 export const deleteFeedback = (id) => {
-   return firestore.collection('feedback').doc(id).delete();
+   return firestore
+      .collection('feedback')
+      .doc(id)
+      .update({ status: 'removed' });
 };

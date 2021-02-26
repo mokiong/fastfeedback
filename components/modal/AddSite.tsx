@@ -46,7 +46,7 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
       });
       mutate(
          ['/api/sites', auth.user.token],
-         (data) => ({ sites: [{ id, ...newSite }, ...data.sites] }),
+         async (data) => ({ sites: [{ id, ...newSite }, ...data.sites] }),
          false
       );
       onClose();

@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import NextLink from 'next/link';
 
-const FeedbackTableHeader = () => {
+const SiteFeedbackTableHeader = ({ siteName }) => {
    return (
       <>
          <Breadcrumb>
@@ -17,12 +17,15 @@ const FeedbackTableHeader = () => {
                   <BreadcrumbLink href="">Feedback</BreadcrumbLink>
                </NextLink>
             </BreadcrumbItem>
+            <BreadcrumbItem>
+               <BreadcrumbLink>{siteName || '-'}</BreadcrumbLink>
+            </BreadcrumbItem>
          </Breadcrumb>
          <Flex justifyContent="space-between">
-            <Heading mb={8}>All Feedback</Heading>
+            <Heading mb={8}>{siteName || '-'}</Heading>
          </Flex>
       </>
    );
 };
 
-export default FeedbackTableHeader;
+export default SiteFeedbackTableHeader;

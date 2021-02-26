@@ -6,6 +6,7 @@ import { getAllFeedBack, getAllSites } from '@/lib/db-admin';
 import Feedback from '@/components/Feedback';
 import { useAuth } from '@/lib/auth';
 import { createFeedback } from '@/lib/firestore';
+import DashboardShell from '@/components/dashboard/shell';
 
 const SiteFeedback = ({ initialFeedback }) => {
    const auth = useAuth();
@@ -31,32 +32,34 @@ const SiteFeedback = ({ initialFeedback }) => {
    };
 
    return (
-      <Box
-         display="flex"
-         flexDirection="column"
-         width="full"
-         maxW="700px"
-         margin="0 auto"
-      >
-         <Box as="form" onSubmit={onSubmit}>
-            <FormControl my={8}>
-               <FormLabel htmlFor="comment">Comment</FormLabel>
-               <Input ref={inputEl} type="comment" id="comment" />
-               <Button
-                  mt={2}
-                  type="submit"
-                  fontWeight="medium"
-                  isDisabled={router.isFallback}
-               >
-                  Add Comment
-               </Button>
-            </FormControl>
+      <DashboardShell>
+         <Box
+            display="flex"
+            flexDirection="column"
+            width="full"
+            maxW="700px"
+            margin="0 auto"
+         >
+            <Box as="form" onSubmit={onSubmit}>
+               <FormControl my={8}>
+                  <FormLabel htmlFor="comment">Comment</FormLabel>
+                  <Input ref={inputEl} type="comment" id="comment" />
+                  <Button
+                     mt={2}
+                     type="submit"
+                     fontWeight="medium"
+                     isDisabled={router.isFallback}
+                  >
+                     Add Comment
+                  </Button>
+               </FormControl>
+            </Box>
+            {allFeedback &&
+               allFeedback.map((feedback) => (
+                  <Feedback key={feedback.id} {...feedback} />
+               ))}
          </Box>
-         {allFeedback &&
-            allFeedback.map((feedback) => (
-               <Feedback key={feedback.id} {...feedback} />
-            ))}
-      </Box>
+      </DashboardShell>
    );
 };
 
