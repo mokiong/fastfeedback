@@ -43,7 +43,7 @@ const SiteFeedback: React.FC<feedbackProps> = ({}) => {
 };
 
 const SiteFeedbackPage = () => (
-   <Page name="My Feedback" path="/feedback/${">
+   <Page name="My Feedback" path="/feedback/">
       <SiteFeedback />
    </Page>
 );
