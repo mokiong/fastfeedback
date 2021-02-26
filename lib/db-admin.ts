@@ -100,10 +100,9 @@ export async function getUserFeedback(userId) {
 
    const feedback = [];
 
-   // if (snapshot.empty) {
-   //    console.log('No matching documents.');
-   //    return ;
-   // }
+   if (snapshot.empty) {
+      return { feedback: null };
+   }
 
    snapshot.forEach((doc) => {
       feedback.push({ id: doc.id, ...doc.data() });
