@@ -15,12 +15,13 @@ const SiteFeedback = ({ initialFeedback, site }) => {
    const router = useRouter();
    const inputEl = React.useRef(null);
    const [allFeedback, setAllFeedback] = React.useState(initialFeedback);
-   console.log('id', site.id);
+
+   const { siteId } = router.query;
 
    const onSubmit = (e) => {
       e.preventDefault();
       let newFeedBack = {
-         siteId: site?.id,
+         siteId: siteId,
          route: '/',
          author: auth.user.name,
          authorId: auth.user.uid,
@@ -39,7 +40,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
          <SiteFeedbackTableHeader
             isSiteOwner={true}
             site={site}
-            siteId={site?.id}
+            siteId={siteId}
          />
          <Box
             display="flex"
@@ -94,7 +95,7 @@ export async function getStaticPaths() {
    const { sites } = await getAllSites();
    const paths = sites.map((site) => ({
       params: {
-         siteId: [site.id.toString()],
+         siteId: site.id.toString(),
       },
    }));
 
