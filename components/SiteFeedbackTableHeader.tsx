@@ -13,7 +13,6 @@ import EditSite from './modal/EditSiteModal';
 const SiteFeedbackTableHeader = ({ isSiteOwner, site, siteId }) => {
    const siteName = site?.name;
    const settings = site?.settings;
-   console.log('settings', site?.settings);
 
    return (
       <>

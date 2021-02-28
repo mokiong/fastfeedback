@@ -2,6 +2,16 @@ import firebase from './firebase';
 
 const firestore = firebase.firestore();
 
+// export const isSiteOwner = async (uid, siteId) => {
+//    const doc = await firestore.collection('sites').doc(siteId).get();
+
+//    if(uid === doc.data().authorId){
+//       return true
+//    }
+
+//    return false
+// }
+
 export const createUser = (uid, data) => {
    return firestore
       .collection('users')

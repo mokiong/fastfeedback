@@ -13,7 +13,7 @@ import FeedbackEmptyState from '@/components/FeedbackEmptyState';
 
 interface feedbackProps {}
 
-const SiteFeedback: React.FC<feedbackProps> = ({}) => {
+const SiteFeedback = ({}) => {
    const { user } = useAuth();
    const { query } = useRouter();
    const { data } = useSWR(
@@ -21,10 +21,16 @@ const SiteFeedback: React.FC<feedbackProps> = ({}) => {
       fetcher
    );
 
+   // const author = isSiteOwner()
+
    if (!data) {
       return (
          <DashboardShell>
-            <SiteFeedbackTableHeader siteName={false} />
+            <SiteFeedbackTableHeader
+               isSiteOwner={true}
+               siteId={query.siteId}
+               site={data?.site}
+            />
             <SiteTableSkeleton />
          </DashboardShell>
       );
@@ -32,7 +38,11 @@ const SiteFeedback: React.FC<feedbackProps> = ({}) => {
 
    return (
       <DashboardShell>
-         <SiteFeedbackTableHeader siteName={data.site.name} />
+         <SiteFeedbackTableHeader
+            isSiteOwner={true}
+            siteId={query.siteId}
+            site={data?.site}
+         />
          {data.feedback ? (
             <FeedbackTable allFeedback={data.feedback} />
          ) : (
