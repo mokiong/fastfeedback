@@ -80,7 +80,6 @@ const SiteFeedback = ({ initialFeedback, site }) => {
 
 export async function getStaticProps(context) {
    const { siteId } = context.params;
-   console.log('siteID', siteId);
    const data = await getAllFeedBack(siteId.toString(), null);
    const { site } = await getSite(siteId.toString());
 
@@ -97,7 +96,7 @@ export async function getStaticPaths() {
    const { sites } = await getAllSites();
    const paths = sites.map((site) => ({
       params: {
-         siteId: [site.id.toString()],
+         siteId: site.id.toString(),
       },
    }));
 
