@@ -9,12 +9,12 @@ import { useTheme } from '@/utils/useTheme';
 
 export async function getStaticProps(context) {
    const [siteId, route] = context.params.site;
-   const { feedback } = await getAllFeedBack(siteId, route);
+   const data = await getAllFeedBack(siteId, route);
    const { site } = await getSite(siteId);
 
    return {
       props: {
-         initialFeedback: feedback,
+         initialFeedback: data ? data.feedback : [],
          site,
       },
       revalidate: 1,
