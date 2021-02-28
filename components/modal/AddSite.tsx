@@ -28,7 +28,7 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
    const initialRef = React.useRef();
    const { register, handleSubmit } = useForm();
 
-   const onCreateSite = ({ name, url }) => {
+   const onCreateSite = async ({ name, url }) => {
       const newSite = {
          authorId: auth.user.uid,
          createdAt: new Date().toISOString(),
@@ -36,7 +36,7 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
          url,
       };
 
-      const { id } = createSite(newSite);
+      const addedSite = await createSite(newSite);
       toast({
          title: 'Success!',
          description: "We've added your site.",
@@ -46,7 +46,9 @@ export const AddSite: React.FC<AddSiteProps> = ({ children }) => {
       });
       mutate(
          ['/api/sites', auth.user.token],
-         async (data) => ({ sites: [{ id, ...newSite }, ...data.sites] }),
+         async (data) => ({
+            sites: [{ id: addedSite.id, ...newSite }, ...data.sites],
+         }),
          false
       );
       onClose();

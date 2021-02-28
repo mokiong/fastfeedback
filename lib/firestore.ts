@@ -27,7 +27,7 @@ export const updateSite = (id, newValues) => {
 };
 
 export const deleteSite = async (id) => {
-   // firestore.collection('sites').doc(id).delete();
+   firestore.collection('sites').doc(id).delete();
 
    const snapshot = await firestore
       .collection('feedback')
