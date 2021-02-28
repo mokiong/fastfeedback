@@ -95,7 +95,7 @@ export async function getStaticPaths() {
    const { sites } = await getAllSites();
    const paths = sites.map((site) => ({
       params: {
-         siteId: site.id.toString(),
+         siteId: [site.id.toString()],
       },
    }));
 
