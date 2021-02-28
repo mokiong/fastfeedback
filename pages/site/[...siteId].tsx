@@ -20,7 +20,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
    const onSubmit = (e) => {
       e.preventDefault();
       let newFeedBack = {
-         siteId: site.id,
+         siteId: site?.id,
          route: '/',
          author: auth.user.name,
          authorId: auth.user.uid,
@@ -39,7 +39,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
          <SiteFeedbackTableHeader
             isSiteOwner={true}
             site={site}
-            siteId={site.id}
+            siteId={site?.id}
          />
          <Box
             display="flex"
