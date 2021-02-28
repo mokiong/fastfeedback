@@ -2,7 +2,7 @@ import { getAllFeedBack, getSite } from '@/lib/db-admin';
 
 export default async (req, res) => {
    const { siteId } = req.query;
-   const respo = await getAllFeedBack(siteId);
+   const respo = await getAllFeedBack(siteId, null);
    const { site } = await getSite(siteId);
 
    if (respo === null) {

@@ -1,17 +1,22 @@
 import { compareDesc, parseISO } from 'date-fns';
 import { db } from './firebase-admin';
 
-export async function getAllFeedBack(siteId) {
+export async function getAllFeedBack(siteId, route) {
    try {
-      const snapshot = await db
+      let ref = db
          .collection('feedback')
          .where('siteId', '==', siteId)
-         .get();
+         .where('status', 'in', ['pending', 'active']);
 
+      if (route) {
+         ref = ref.where('route', '==', route);
+      }
+
+      const snapshot = await ref.get();
       const feedback = [];
 
       if (snapshot.empty) {
-         console.log('No matching documents.');
+         console.log('No matching documents get all feedback');
          return null;
       }
 
@@ -35,7 +40,7 @@ export async function getAllSites() {
       const sites = [];
 
       if (snapshot.empty) {
-         console.log('No matching documents.');
+         console.log('No matching documents getAllSites.');
          return;
       }
 
@@ -56,7 +61,7 @@ export async function getSite(siteId) {
       const site = { id: doc.id, ...doc.data() };
 
       if (!doc.exists) {
-         console.log('No matching documents.');
+         console.log('No matching documents getSite.');
          return;
       }
 
@@ -76,7 +81,7 @@ export async function getUserSites(userId) {
    const sites = [];
 
    if (snapshot.empty) {
-      console.log('No matching documents.');
+      console.log('No matching documents getUserSites.');
       return;
    }
 

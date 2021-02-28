@@ -2,37 +2,46 @@ import React from 'react';
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import { getAllFeedBack, getAllSites } from '@/lib/db-admin';
+import { getAllFeedBack, getAllSites, getSite } from '@/lib/db-admin';
 import Feedback from '@/components/Feedback';
 import { useAuth } from '@/lib/auth';
 import { createFeedback } from '@/lib/firestore';
 import DashboardShell from '@/components/dashboard/shell';
+import SiteTableHeader from '@/components/SiteTableHeader';
+import SiteFeedbackTableHeader from '@/components/SiteFeedbackTableHeader';
 
-const SiteFeedback = ({ initialFeedback }) => {
+const SiteFeedback = ({ initialFeedback, site }) => {
    const auth = useAuth();
    const router = useRouter();
    const inputEl = React.useRef(null);
    const [allFeedback, setAllFeedback] = React.useState(initialFeedback);
+   const { siteId } = router.query;
 
    const onSubmit = (e) => {
       e.preventDefault();
-      const newFeedBack = {
+      let newFeedBack = {
+         // id: '',
+         siteId: siteId[0],
+         route: '/',
          author: auth.user.name,
          authorId: auth.user.uid,
-         siteId: router.query.siteId,
          text: inputEl.current.value,
          createdAt: new Date().toISOString(),
          provider: auth.user.provider,
          status: 'pending',
       };
-
+      const createdFeed = createFeedback(newFeedBack);
       inputEl.current.value = '';
-      setAllFeedback([newFeedBack, ...allFeedback]);
-      createFeedback(newFeedBack);
+      setAllFeedback([{ id: createdFeed.id, ...newFeedBack }, ...allFeedback]);
    };
 
    return (
       <DashboardShell>
+         <SiteFeedbackTableHeader
+            isSiteOwner={true}
+            site={site}
+            siteId={siteId.toString()}
+         />
          <Box
             display="flex"
             flexDirection="column"
@@ -56,7 +65,12 @@ const SiteFeedback = ({ initialFeedback }) => {
             </Box>
             {allFeedback &&
                allFeedback.map((feedback) => (
-                  <Feedback key={feedback.id} {...feedback} />
+                  <Feedback
+                     provider={auth?.user?.provider}
+                     settings={site?.settings}
+                     key={feedback.id}
+                     {...feedback}
+                  />
                ))}
          </Box>
       </DashboardShell>
@@ -65,26 +79,35 @@ const SiteFeedback = ({ initialFeedback }) => {
 
 export async function getStaticProps(context) {
    const { siteId } = context.params;
-   const data = await getAllFeedBack(siteId);
+   const data = await getAllFeedBack(siteId.toString(), null);
+   const { site } = await getSite(siteId.toString());
 
    return {
       props: {
          initialFeedback: data ? data.feedback : [],
+         site,
       },
       revalidate: 1,
    };
 }
 
 export async function getStaticPaths() {
-   const { sites } = await getAllSites();
-   const paths = sites.map((site) => ({
-      params: {
-         siteId: site.id.toString(),
-      },
-   }));
+   if (process.env.NODE_ENV === 'production') {
+      const { sites } = await getAllSites();
+      const paths = sites.map((site) => ({
+         params: {
+            siteId: site.id.toString(),
+         },
+      }));
+
+      return {
+         paths,
+         fallback: true,
+      };
+   }
 
    return {
-      paths,
+      paths: [{ params: { siteId: ['rXK1WMWSRzawxa4Tdk7g'] } }],
       fallback: true,
    };
 }

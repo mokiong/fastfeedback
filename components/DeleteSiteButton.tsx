@@ -10,36 +10,35 @@ import {
    IconButton,
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
-import { deleteFeedback } from '@/lib/firestore';
+import { deleteFeedback, deleteSite } from '@/lib/firestore';
 import { mutate } from 'swr';
 import { useAuth } from '@/lib/auth';
 
-const RemoveButton = ({ feedbackId }) => {
+const DeleteSiteButton = ({ siteId }) => {
    const [isOpen, setIsOpen] = useState(false);
    const cancelRef = useRef();
    const auth = useAuth();
 
    const onClose = () => setIsOpen(false);
    const onDeleteFeedback = () => {
-      deleteFeedback(feedbackId);
-      // mutate(
-      //    ['/api/feedback', auth.user.token],
-      //    (data) => {
-      //       return {
-      //          feedback: data.feedback.filter(
-      //             (feedback) => feedback.id !== feedbackId
-      //          ),
-      //       };
-      //    },
-      //    false
-      // );
+      deleteSite(siteId);
+      mutate(
+         ['/api/sites', auth.user.token],
+         (data) => {
+            console.log('sites:', data);
+            return {
+               sites: data.sites.filter((site) => site.id !== siteId),
+            };
+         },
+         false
+      );
       onClose();
    };
 
    return (
       <>
          <IconButton
-            aria-label="Delete feedback"
+            aria-label="Delete site"
             icon={<DeleteIcon />}
             variant="ghost"
             onClick={() => setIsOpen(true)}
@@ -52,11 +51,12 @@ const RemoveButton = ({ feedbackId }) => {
             <AlertDialogOverlay>
                <AlertDialogContent>
                   <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                     Delete Feedback
+                     Delete Site
                   </AlertDialogHeader>
 
                   <AlertDialogBody>
-                     Are you sure? You can't undo this action afterwards.
+                     Are you sure? This will also delete all of the site's
+                     feedback as well.
                   </AlertDialogBody>
 
                   <AlertDialogFooter>
@@ -79,4 +79,4 @@ const RemoveButton = ({ feedbackId }) => {
    );
 };
 
-export default RemoveButton;
+export default DeleteSiteButton;
