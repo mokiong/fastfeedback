@@ -16,7 +16,6 @@ export async function getStaticProps(context) {
       props: {
          initialFeedback: feedback,
          site,
-         siteId: siteId.toString(),
       },
       revalidate: 1,
    };
@@ -36,18 +35,18 @@ export async function getStaticPaths() {
    };
 }
 
-const EmbeddedFeedbackPage = ({ initialFeedback, site, siteId }) => {
+const EmbeddedFeedbackPage = ({ initialFeedback, site }) => {
    const router = useRouter();
    const colorMode = useTheme();
    const textColor = {
       light: 'gray.900',
       dark: 'gray.200',
    };
-
+   console.log('site Id', router.query.siteId);
    return (
       <Box display="flex" flexDirection="column" width="full">
          {/* <FeedbackLink paths={router?.query?.site || []} /> */}
-         <FeedbackLink siteId={siteId} />
+         <FeedbackLink siteId={router.query.siteId} />
          {initialFeedback?.length ? (
             initialFeedback.map((feedback, index) => (
                <Feedback
