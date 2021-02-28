@@ -2,12 +2,11 @@ import React from 'react';
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import { getAllFeedBack, getAllSites, getSite } from '@/lib/db-admin';
+import { getAllFeedBack, getAppSites, getSite } from '@/lib/db-admin';
 import Feedback from '@/components/Feedback';
 import { useAuth } from '@/lib/auth';
 import { createFeedback } from '@/lib/firestore';
 import DashboardShell from '@/components/dashboard/shell';
-import SiteTableHeader from '@/components/SiteTableHeader';
 import SiteFeedbackTableHeader from '@/components/SiteFeedbackTableHeader';
 
 const SiteFeedback = ({ initialFeedback, site }) => {
@@ -92,7 +91,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-   const { sites } = await getAllSites();
+   const { sites } = await getAppSites();
    const paths = sites.map((site) => ({
       params: {
          siteId: site.id.toString(),
