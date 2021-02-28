@@ -109,7 +109,7 @@ const Home = ({ allFeedback }) => {
 };
 
 export async function getStaticProps(context) {
-   const data = await getAllFeedBack(SITE_ID);
+   const data = await getAllFeedBack(SITE_ID, '/');
 
    return {
       props: {
