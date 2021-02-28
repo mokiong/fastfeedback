@@ -16,7 +16,8 @@ const SiteFeedback = ({ initialFeedback, site }) => {
    const inputEl = React.useRef(null);
    const [allFeedback, setAllFeedback] = React.useState(initialFeedback);
    const { siteId } = router.query;
-
+   console.log('router id', siteId);
+   console.log('router', router.query);
    const onSubmit = (e) => {
       e.preventDefault();
       let newFeedBack = {
@@ -78,7 +79,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
 };
 
 export async function getStaticProps(context) {
-   const siteId = context.params;
+   const { siteId } = context.params;
    console.log('siteID', siteId);
    const data = await getAllFeedBack(siteId.toString(), null);
    const { site } = await getSite(siteId.toString());
