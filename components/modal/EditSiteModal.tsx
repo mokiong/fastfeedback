@@ -39,7 +39,7 @@ export const EditSite = ({ settings, siteId, children }) => {
          duration: 5000,
          isClosable: true,
       });
-      mutate(['/api/sites', auth.user.token]);
+      mutate([`/api/sites/${siteId}`, auth.user.token]);
       onClose();
    };
 

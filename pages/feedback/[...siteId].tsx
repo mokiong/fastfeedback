@@ -21,13 +21,11 @@ const SiteFeedback = ({}) => {
       fetcher
    );
 
-   // const author = isSiteOwner()
-
    if (!data) {
       return (
          <DashboardShell>
             <SiteFeedbackTableHeader
-               isSiteOwner={true}
+               isSiteOwner={data?.site?.authorId === user?.uid}
                siteId={query.siteId}
                site={data?.site}
             />
@@ -39,7 +37,7 @@ const SiteFeedback = ({}) => {
    return (
       <DashboardShell>
          <SiteFeedbackTableHeader
-            isSiteOwner={true}
+            isSiteOwner={data?.site?.authorId === user?.uid}
             siteId={query.siteId}
             site={data?.site}
          />

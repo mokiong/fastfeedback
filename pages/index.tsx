@@ -6,15 +6,14 @@ import { useAuth } from '@/lib/auth';
 import LogoIcon from '@/components/icons/logo';
 import GithubIcon from '@/components/icons/GithubIcon';
 import GoogleIcon from '@/components/icons/GoogleIcon';
-import { getAllFeedBack } from '@/lib/db-admin';
-import FeedbackLink from '@/components/FeedbackLink';
+import { getPopularSites, getUser } from '@/lib/db-admin';
 import Feedback from '@/components/Feedback';
+import SiteRowIndex from '@/components/SiteRowIndex';
+import PopularSiteRow from '@/components/PopularSiteRow';
 
 interface indexProps {}
 
-const SITE_ID = '26XYyadLo7H2MTgxbyMg';
-
-const Home = ({ allFeedback }) => {
+const Home = ({ popularSites }) => {
    const auth = useAuth();
 
    return (
@@ -99,23 +98,45 @@ const Home = ({ allFeedback }) => {
             margin="0 auto"
             mt={8}
          >
-            <FeedbackLink siteId={SITE_ID} />
-            {allFeedback.map((feed) => (
-               <Feedback key={feed.id} {...feed} />
+            <SiteRowIndex />
+            {popularSites.map((site) => (
+               <PopularSiteRow key={site.id} {...site} />
             ))}
          </Box>
       </>
    );
 };
 
-export async function getStaticProps(context) {
-   const data = await getAllFeedBack(SITE_ID, '/');
+export async function getServerSideProps(context) {
+   const { sites, error } = await getPopularSites();
+   const popularSites = [];
+
+   for (const site of sites) {
+      const { user } = await getUser(site.authorId);
+      popularSites.push({
+         siteName: site.name,
+         author: user.name,
+         provider: user.provider,
+         photoUrl: user.photoUrl,
+         // ratings: site?.ratings,
+         ratings: 0,
+      });
+   }
+   // const popularSites = sites.map(async (site) => {
+   //    const { user } = await getUser(site.authorId);
+   //    return {
+   //       siteName: site.name,
+   //       author: user.name,
+   //       provider: user.provider,
+   //       ratings: site?.ratings,
+   //    };
+   // });
+   console.log('popularSites', popularSites);
 
    return {
       props: {
-         allFeedback: data ? data.feedback : [],
+         popularSites: error ? [] : popularSites,
       },
-      revalidate: 1,
    };
 }
 

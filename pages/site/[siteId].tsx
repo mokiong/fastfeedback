@@ -38,7 +38,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
    return (
       <DashboardShell>
          <SiteFeedbackTableHeader
-            isSiteOwner={true}
+            isSiteOwner={site?.authorId === auth?.user?.uid}
             site={site}
             siteId={siteId}
          />
@@ -92,15 +92,25 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-   const { sites } = await getAllSites();
-   const paths = sites.map((site) => ({
-      params: {
-         siteId: site.id.toString(),
-      },
-   }));
+   // const { sites } = await getAllSites();
+   // const paths = sites.map((site) => ({
+   //    params: {
+   //       siteId: site.id.toString(),
+   //    },
+   // }));
 
+   // return {
+   //    paths,
+   //    fallback: true,
+   // };
    return {
-      paths,
+      paths: [
+         {
+            params: {
+               siteId: 'rXK1WMWSRzawxa4Tdk7g',
+            },
+         },
+      ],
       fallback: true,
    };
 }
