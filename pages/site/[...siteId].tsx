@@ -16,7 +16,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
    const inputEl = React.useRef(null);
    const [allFeedback, setAllFeedback] = React.useState(initialFeedback);
    const { siteId } = router.query;
-   console.log('router id', siteId);
+   console.log('router id', siteId[0]);
    console.log('router', router.query);
    const onSubmit = (e) => {
       e.preventDefault();
@@ -41,7 +41,7 @@ const SiteFeedback = ({ initialFeedback, site }) => {
          <SiteFeedbackTableHeader
             isSiteOwner={true}
             site={site}
-            siteId={siteId.toString()}
+            siteId={siteId[0].toString()}
          />
          <Box
             display="flex"
