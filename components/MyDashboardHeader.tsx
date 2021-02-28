@@ -17,7 +17,7 @@ const SiteTableHeader = () => {
             </BreadcrumbItem>
          </Breadcrumb>
          <Flex justifyContent="space-between">
-            <Heading mb={8}>All Sites</Heading>
+            <Heading mb={8}>My Sites</Heading>
             <AddSite> + Add Site </AddSite>
          </Flex>
       </>

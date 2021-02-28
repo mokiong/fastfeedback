@@ -81,7 +81,7 @@ export async function getStaticProps(context) {
    const { siteId } = context.params;
    const data = await getAllFeedBack(siteId.toString(), null);
    const { site } = await getSite(siteId.toString());
-
+   console.log('data', data.feedback);
    return {
       props: {
          initialFeedback: data ? data.feedback : [],
@@ -92,27 +92,27 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-   // const { sites } = await getAllSites();
-   // const paths = sites.map((site) => ({
-   //    params: {
-   //       siteId: site.id.toString(),
-   //    },
-   // }));
+   const { sites } = await getAllSites();
+   const paths = sites.map((site) => ({
+      params: {
+         siteId: site.id.toString(),
+      },
+   }));
 
-   // return {
-   //    paths,
-   //    fallback: true,
-   // };
    return {
-      paths: [
-         {
-            params: {
-               siteId: 'rXK1WMWSRzawxa4Tdk7g',
-            },
-         },
-      ],
+      paths,
       fallback: true,
    };
+   // return {
+   //    paths: [
+   //       {
+   //          params: {
+   //             siteId: 'rXK1WMWSRzawxa4Tdk7g',
+   //          },
+   //       },
+   //    ],
+   //    fallback: true,
+   // };
 }
 
 export default SiteFeedback;

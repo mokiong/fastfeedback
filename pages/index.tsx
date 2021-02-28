@@ -114,6 +114,7 @@ export async function getServerSideProps(context) {
    for (const site of sites) {
       const { user } = await getUser(site.authorId);
       popularSites.push({
+         id: site.id,
          siteName: site.name,
          author: user.name,
          provider: user.provider,
@@ -122,16 +123,6 @@ export async function getServerSideProps(context) {
          ratings: 0,
       });
    }
-   // const popularSites = sites.map(async (site) => {
-   //    const { user } = await getUser(site.authorId);
-   //    return {
-   //       siteName: site.name,
-   //       author: user.name,
-   //       provider: user.provider,
-   //       ratings: site?.ratings,
-   //    };
-   // });
-   console.log('popularSites', popularSites);
 
    return {
       props: {

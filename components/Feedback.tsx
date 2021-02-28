@@ -5,10 +5,6 @@ import GithubIcon from './icons/GithubIcon';
 import GoogleIcon from './icons/GoogleIcon';
 
 const Feedback = ({ author, text, createdAt, settings, provider }) => {
-   console.log('provider', typeof provider.slice(0, -4));
-   if ('abc' === 'abc') {
-      console.log(true);
-   }
    return (
       <Box borderRadius={4} maxW="700px" w="full" mt={4}>
          <Flex align="center">

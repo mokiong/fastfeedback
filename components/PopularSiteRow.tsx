@@ -5,7 +5,6 @@ import GithubIcon from './icons/GithubIcon';
 import GoogleIcon from './icons/GoogleIcon';
 
 const PopularSiteRow = ({ siteName, author, provider, photoUrl, ratings }) => {
-   console.log('photo', photoUrl);
    return (
       <Box borderRadius={4} maxW="700px" w="full" mt={4}>
          <Flex align="center">

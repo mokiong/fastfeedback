@@ -69,25 +69,25 @@ export async function getAllFeedBack(siteId, route) {
    }
 }
 
-export async function getAllSites() {
-   try {
-      const snapshot = await db.collection('sites').get();
-      const sites = [];
+export async function getAppSites() {
+   const snapshot = await db.collection('sites').get();
 
-      if (snapshot.empty) {
-         console.log('No matching documents getAllSites.');
-         return;
-      }
+   const sites = [];
 
-      snapshot.forEach((doc) => {
-         sites.push({ id: doc.id, ...doc.data() });
-      });
-
-      return { sites };
-   } catch (error) {
-      console.log(error.message);
-      return { error };
+   if (snapshot.empty) {
+      console.log('No matching documents getAppSites.');
+      return;
    }
+
+   snapshot.forEach((doc) => {
+      sites.push({ id: doc.id, ...doc.data() });
+   });
+
+   sites.sort((a, b) =>
+      compareDesc(parseISO(a.createdAt), parseISO(b.createdAt))
+   );
+
+   return { sites };
 }
 
 export async function getSite(siteId) {
@@ -105,6 +105,30 @@ export async function getSite(siteId) {
       console.log(error.message);
       return { error };
    }
+}
+
+export async function getAllSites(userId) {
+   const snapshot = await db
+      .collection('sites')
+      .where('authorId', '==', userId)
+      .get();
+
+   const sites = [];
+
+   if (snapshot.empty) {
+      console.log('No matching documents getUserSites.');
+      return;
+   }
+
+   snapshot.forEach((doc) => {
+      sites.push({ id: doc.id, ...doc.data() });
+   });
+
+   sites.sort((a, b) =>
+      compareDesc(parseISO(a.createdAt), parseISO(b.createdAt))
+   );
+
+   return { sites };
 }
 
 export async function getUserSites(userId) {

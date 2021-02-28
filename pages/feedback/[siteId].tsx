@@ -16,8 +16,10 @@ interface feedbackProps {}
 const SiteFeedback = ({}) => {
    const { user } = useAuth();
    const { query } = useRouter();
+   const { siteId } = query;
+
    const { data } = useSWR(
-      user ? [`/api/feedback/${query.siteId}`, user.token] : null,
+      user ? [`/api/feedback/${siteId}`, user.token] : null,
       fetcher
    );
 
@@ -26,7 +28,7 @@ const SiteFeedback = ({}) => {
          <DashboardShell>
             <SiteFeedbackTableHeader
                isSiteOwner={data?.site?.authorId === user?.uid}
-               siteId={query.siteId}
+               siteId={siteId}
                site={data?.site}
             />
             <SiteTableSkeleton />
@@ -38,13 +40,13 @@ const SiteFeedback = ({}) => {
       <DashboardShell>
          <SiteFeedbackTableHeader
             isSiteOwner={data?.site?.authorId === user?.uid}
-            siteId={query.siteId}
+            siteId={siteId}
             site={data?.site}
          />
          {data.feedback ? (
             <FeedbackTable allFeedback={data.feedback} />
          ) : (
-            <FeedbackEmptyState />
+            <FeedbackEmptyState siteId={siteId} />
          )}
       </DashboardShell>
    );
