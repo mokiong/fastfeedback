@@ -21,19 +21,19 @@ export async function getStaticProps(context) {
    };
 }
 
-export async function getStaticPaths() {
-   const { sites } = await getAllSites();
-   const paths = sites.map((site) => ({
-      params: {
-         siteId: site.id.toString(),
-      },
-   }));
+// export async function getStaticPaths() {
+//    const { sites } = await getAllSites();
+//    const paths = sites.map((site) => ({
+//       params: {
+//          siteId: site.id.toString(),
+//       },
+//    }));
 
-   return {
-      paths,
-      fallback: true,
-   };
-}
+//    return {
+//       paths,
+//       fallback: true,
+//    };
+// }
 
 const EmbeddedFeedbackPage = ({ initialFeedback, site }) => {
    const router = useRouter();
