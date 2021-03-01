@@ -9,7 +9,7 @@ const FeedbackTable = ({ allFeedback }) => {
             <Tr>
                <Th minW="150px">Name</Th>
                <Th>Feedback</Th>
-               <Th>Site Name</Th>
+               <Th>Url</Th>
                <Th>Visible</Th>
                <Th width="50px">{''}</Th>
             </Tr>

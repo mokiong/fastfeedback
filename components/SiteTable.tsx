@@ -13,7 +13,7 @@ const SiteTable = ({ sites }) => {
             <Tr>
                <Th>Name</Th>
                <Th>Site Link</Th>
-               <Th>Feedback Link</Th>
+               <Th>Rating</Th>
                <Th>Date Added</Th>
                <Th>{''}</Th>
             </Tr>
@@ -31,17 +31,7 @@ const SiteTable = ({ sites }) => {
                      </NextLink>
                   </Td>
                   <Td>{site.url}</Td>
-                  <Td>
-                     <NextLink
-                        href="/feedback/[siteId]"
-                        as={`/feedback/${site.id}`}
-                        passHref
-                     >
-                        <Link color="blue.500" fontWeight="medium">
-                           View Feedback
-                        </Link>
-                     </NextLink>
-                  </Td>
+                  <Td color="blue.500">COMING SOON!</Td>
                   <Td>{format(parseISO(site.createdAt), 'PPpp')}</Td>
                   <Td>
                      <DeleteSiteButton siteId={site.id} />

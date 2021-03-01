@@ -22,18 +22,17 @@ const RemoveButton = ({ feedbackId }) => {
    const onClose = () => setIsOpen(false);
    const onDeleteFeedback = () => {
       deleteFeedback(feedbackId);
-      // TODO: fix cache for this
-      // mutate(
-      //    ['/api/feedback', auth.user.token],
-      //    (data) => {
-      //       return {
-      //          feedback: data.feedback.filter(
-      //             (feedback) => feedback.id !== feedbackId
-      //          ),
-      //       };
-      //    },
-      //    false
-      // );
+      mutate(
+         ['/api/my-feedbacks', auth.user.token],
+         (data) => {
+            return {
+               feedback: data.feedback.filter(
+                  (feedback) => feedback.id !== feedbackId
+               ),
+            };
+         },
+         false
+      );
       onClose();
    };
 

@@ -25,7 +25,6 @@ const DeleteSiteButton = ({ siteId }) => {
       mutate(
          ['/api/sites', auth.user.token],
          (data) => {
-            console.log('sites:', data);
             return {
                sites: data.sites.filter((site) => site.id !== siteId),
             };

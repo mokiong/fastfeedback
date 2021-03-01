@@ -10,10 +10,28 @@ import { useAuth } from '@/lib/auth';
 const FeedbackRow = ({ id, author, text, status, siteUrl }) => {
    const auth = useAuth();
    const [checked, setChecked] = React.useState(status === 'active');
-
    const toggleFeedback = () => {
       updateFeedback(id, { status: !checked ? 'active' : 'pending' });
-      mutate(['/api/feedback', auth.user.token]);
+      // mutate(`/api/my-feedbacks`, auth.user.token);
+
+      mutate(
+         ['/api/my-feedbacks', auth?.user?.token],
+         (data) => {
+            data.feedback.forEach((feedback) => {
+               if (feedback.id === id) {
+                  console.log('hello');
+                  feedback.status = checked ? 'active' : 'pending';
+               }
+            });
+            return {
+               feedback: data.feedback,
+            };
+         },
+         false
+      );
+      console.log('status', status);
+      console.log('checked', checked);
+      setChecked(!checked);
    };
 
    return (
@@ -26,7 +44,7 @@ const FeedbackRow = ({ id, author, text, status, siteUrl }) => {
          <Td>
             <Switch
                colorScheme="green"
-               isChecked={status === 'active'}
+               isChecked={checked}
                onChange={toggleFeedback}
             />
          </Td>

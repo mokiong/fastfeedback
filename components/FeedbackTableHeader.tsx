@@ -19,7 +19,7 @@ const FeedbackTableHeader = () => {
             </BreadcrumbItem>
          </Breadcrumb>
          <Flex justifyContent="space-between">
-            <Heading mb={8}>All Feedback</Heading>
+            <Heading mb={8}>My Sites Feedback</Heading>
          </Flex>
       </>
    );
