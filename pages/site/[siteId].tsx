@@ -114,28 +114,28 @@ const SiteFeedback = () => {
 
 // }
 
-export async function getStaticPaths() {
-   const { sites } = await getAppSites();
-   const paths = sites.map((site) => ({
-      params: {
-         siteId: site.id.toString(),
-      },
-   }));
+// export async function getStaticPaths() {
+//    const { sites } = await getAppSites();
+//    const paths = sites.map((site) => ({
+//       params: {
+//          siteId: site.id.toString(),
+//       },
+//    }));
 
-   return {
-      paths,
-      fallback: true,
-   };
-   // return {
-   //    paths: [
-   //       {
-   //          params: {
-   //             siteId: 'rXK1WMWSRzawxa4Tdk7g',
-   //          },
-   //       },
-   //    ],
-   //    fallback: true,
-   // };
-}
+//    return {
+//       paths,
+//       fallback: true,
+//    };
+//    // return {
+//    //    paths: [
+//    //       {
+//    //          params: {
+//    //             siteId: 'rXK1WMWSRzawxa4Tdk7g',
+//    //          },
+//    //       },
+//    //    ],
+//    //    fallback: true,
+//    // };
+// }
 
 export default SiteFeedback;
