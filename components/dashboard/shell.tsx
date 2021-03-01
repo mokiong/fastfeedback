@@ -39,7 +39,7 @@ const DashboardShell = ({ children }) => {
                      <Link mr={4}>Feedback</Link>
                   </NextLink>
                   <NextLink href="/my-sites" passHref>
-                     <Link>My Sites</Link>
+                     <Link mr={4}>My Sites</Link>
                   </NextLink>
                </Flex>
                <Flex justifyContent="center" alignItems="center">
