@@ -62,13 +62,12 @@ function useProvideAuth() {
    };
 
    const signinWithGoogle = () => {
-      Router.push('/sites');
-
       return firebase
          .auth()
          .signInWithPopup(new firebase.auth.GoogleAuthProvider())
          .then((response) => {
             handleUser(response);
+            Router.push('/sites');
          });
    };
 
