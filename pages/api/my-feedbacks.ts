@@ -1,6 +1,7 @@
 import { getAllSites, getMySitesFeedBack } from '@/lib/db-admin';
 import { auth } from '@/lib/firebase-admin';
 import { logger, formatObjectKeys } from '@/utils/logger';
+import { compareDesc, parseISO } from 'date-fns';
 
 export default async (req, res) => {
    try {
@@ -14,6 +15,10 @@ export default async (req, res) => {
             finalFeedback = finalFeedback.concat(feed.feedback);
          }
       }
+
+      finalFeedback.sort((a, b) =>
+         compareDesc(parseISO(a.createdAt), parseISO(b.createdAt))
+      );
 
       res.status(200).json({ feedback: finalFeedback });
    } catch (error) {

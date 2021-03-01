@@ -20,7 +20,6 @@ const SiteFeedback = () => {
    const { data: siteData } = useSWR(`/api/site/${siteId}`);
    const allFeedback = feedbackData?.feedback;
    const site = siteData?.site;
-
    const onSubmit = (e) => {
       e.preventDefault();
       let newFeedBack = {
@@ -36,10 +35,18 @@ const SiteFeedback = () => {
       };
       const createdFeed = createFeedback(newFeedBack);
       inputEl.current.value = '';
-      mutate(`/api/feedback/${siteId}`, async (data) => ({
-         feedback: [{ id: createdFeed.id, ...newFeedBack }, ...allFeedback],
-      }));
-      // setAllFeedback([{ id: createdFeed.id, ...newFeedBack }, ...allFeedback]);
+      console.log('allFeedback', allFeedback);
+
+      allFeedback
+         ? mutate(`/api/feedback/${siteId}`, async (data) => ({
+              feedback: [
+                 { id: createdFeed.id, ...newFeedBack },
+                 ...data.feedback,
+              ],
+           }))
+         : mutate(`/api/feedback/${siteId}`, async (data) => ({
+              feedback: [{ id: createdFeed.id, ...newFeedBack }],
+           }));
    };
 
    return (
