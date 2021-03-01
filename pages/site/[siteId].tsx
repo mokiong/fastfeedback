@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import { getAllFeedBack, getAppSites, getSite } from '@/lib/db-admin';
 import Feedback from '@/components/Feedback';
 import { useAuth } from '@/lib/auth';
 import { createFeedback } from '@/lib/firestore';
@@ -17,27 +16,28 @@ const SiteFeedback = () => {
 
    const { siteId } = router.query;
 
-   const { data } = useSWR(`/api/feedback/${siteId}`);
-   const allFeedback = data?.feedback;
-   const site = data?.site;
+   const { data: feedbackData } = useSWR(`/api/feedback/${siteId}`);
+   const { data: siteData } = useSWR(`/api/site/${siteId}`);
+   const allFeedback = feedbackData?.feedback;
+   const site = siteData?.site;
 
    const onSubmit = (e) => {
       e.preventDefault();
       let newFeedBack = {
          siteId: siteId,
          route: '/',
+         siteUrl: site.url,
          author: auth.user.name,
          authorId: auth.user.uid,
          text: inputEl.current.value,
          createdAt: new Date().toISOString(),
          provider: auth.user.provider,
-         status: 'pending',
+         status: 'active',
       };
-      // const createdFeed = createFeedback(newFeedBack);
-      createFeedback(newFeedBack);
+      const createdFeed = createFeedback(newFeedBack);
       inputEl.current.value = '';
       mutate(`/api/feedback/${siteId}`, async (data) => ({
-         feedback: [newFeedBack, ...allFeedback],
+         feedback: [{ id: createdFeed.id, ...newFeedBack }, ...allFeedback],
       }));
       // setAllFeedback([{ id: createdFeed.id, ...newFeedBack }, ...allFeedback]);
    };
@@ -83,59 +83,5 @@ const SiteFeedback = () => {
       </DashboardShell>
    );
 };
-
-// export async function getStaticProps(context) {
-//    const { siteId } = context.params;
-//    const data = await getAllFeedBack(siteId.toString(), null);
-//    const { site } = await getSite(siteId.toString());
-
-//    return {
-//       props: {
-//          initialFeedback: data ? data.feedback : [],
-//          site,
-//       },
-//       revalidate: 1,
-//    };
-// }
-
-// TODO: Put getServerSideProps: get incoming feedback on server side
-// or put it on api please decide on what to do api is better ata
-// export async function getServerSideProps(context) {
-//    const { siteId } = context.params;
-//    const data = await getAllFeedBack(siteId.toString(), null);
-//    const { site } = await getSite(siteId.toString());
-
-//    return {
-//       props: {
-//          initialFeedback: data ? data.feedback : [],
-//          site,
-//       },
-//    };
-
-// }
-
-// export async function getStaticPaths() {
-//    const { sites } = await getAppSites();
-//    const paths = sites.map((site) => ({
-//       params: {
-//          siteId: site.id.toString(),
-//       },
-//    }));
-
-//    return {
-//       paths,
-//       fallback: true,
-//    };
-//    // return {
-//    //    paths: [
-//    //       {
-//    //          params: {
-//    //             siteId: 'rXK1WMWSRzawxa4Tdk7g',
-//    //          },
-//    //       },
-//    //    ],
-//    //    fallback: true,
-//    // };
-// }
 
 export default SiteFeedback;

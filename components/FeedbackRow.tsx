@@ -7,7 +7,7 @@ import { updateFeedback } from '@/lib/firestore';
 import { mutate } from 'swr';
 import { useAuth } from '@/lib/auth';
 
-const FeedbackRow = ({ id, author, text, route, status }) => {
+const FeedbackRow = ({ id, author, text, status, siteUrl }) => {
    const auth = useAuth();
    const [checked, setChecked] = React.useState(status === 'active');
 
@@ -21,7 +21,7 @@ const FeedbackRow = ({ id, author, text, route, status }) => {
          <Td fontWeight="medium">{author}</Td>
          <Td>{text}</Td>
          <Td>
-            <Code>{route || '/'}</Code>
+            <Code>{siteUrl || '/'}</Code>
          </Td>
          <Td>
             <Switch

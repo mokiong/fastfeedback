@@ -1,10 +1,9 @@
 import { Heading, Text, Flex } from '@chakra-ui/react';
 import React from 'react';
-import AddSite from '../modal/AddSite';
 
 interface EmptyStateProps {}
 
-const EmptyState: React.FC<EmptyStateProps> = ({}) => {
+const EmptyFeedbackState: React.FC<EmptyStateProps> = ({}) => {
    return (
       <Flex
          w="100%"
@@ -16,12 +15,11 @@ const EmptyState: React.FC<EmptyStateProps> = ({}) => {
          align="center"
       >
          <Heading size="lg" mb={2}>
-            You haven't added any sites.
+            No feedbacks yet to any of your sites.
          </Heading>
-         <Text mb={4}>Welcome! Let's get started.</Text>
-         <AddSite>Add Your First Site</AddSite>
+         <Text mb={4}>Dont worry! Patience is a virtue.</Text>
       </Flex>
    );
 };
 
-export default EmptyState;
+export default EmptyFeedbackState;

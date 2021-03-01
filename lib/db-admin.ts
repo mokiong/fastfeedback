@@ -41,11 +41,40 @@ export async function getAllFeedBack(siteId, route) {
       let ref = db
          .collection('feedback')
          .where('siteId', '==', siteId)
-         .where('status', 'in', ['pending', 'active']);
+         .where('status', 'in', ['active']);
 
       if (route) {
          ref = ref.where('route', '==', route);
       }
+
+      const snapshot = await ref.get();
+      const feedback = [];
+
+      if (snapshot.empty) {
+         console.log('No matching documents get all feedback');
+         return null;
+      }
+
+      snapshot.forEach((doc) => {
+         feedback.push({ id: doc.id, ...doc.data() });
+      });
+
+      feedback.sort((a, b) =>
+         compareDesc(parseISO(a.createdAt), parseISO(b.createdAt))
+      );
+
+      return { feedback };
+   } catch (error) {
+      return { error };
+   }
+}
+
+export async function getMySitesFeedBack(siteId) {
+   try {
+      let ref = db
+         .collection('feedback')
+         .where('siteId', '==', siteId)
+         .where('status', 'in', ['pending', 'active']);
 
       const snapshot = await ref.get();
       const feedback = [];

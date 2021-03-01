@@ -9,6 +9,7 @@ import fetcher from '@/utils/fetcher';
 import FeedbackTable from '@/components/FeedbackTable';
 import FeedbackTableHeader from '@/components/FeedbackTableHeader';
 import Page from '@/components/Page';
+import EmptyFeedbackState from '@/components/EmptyFeedbackState';
 
 interface feedbackProps {}
 
@@ -34,7 +35,7 @@ const MyFeedback: React.FC<feedbackProps> = ({}) => {
          {data.feedback ? (
             <FeedbackTable allFeedback={data.feedback} />
          ) : (
-            <EmptyState />
+            <EmptyFeedbackState />
          )}
       </DashboardShell>
    );
