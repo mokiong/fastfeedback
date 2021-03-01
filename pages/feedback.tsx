@@ -15,7 +15,7 @@ interface feedbackProps {}
 const MyFeedback: React.FC<feedbackProps> = ({}) => {
    const { user } = useAuth();
    const { data } = useSWR(
-      user ? ['/api/feedback', user.token] : null,
+      user ? ['/api/my-feedbacks', user.token] : null,
       fetcher
    );
 
